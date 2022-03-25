@@ -1,0 +1,29 @@
+.car-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 30rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  padding: 0.5rem;
+  margin: 1rem;
+  border-radius: 12px;
+  background-color: #f8f6f68e;
+}
+
+.car-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 30rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  padding: 0.5rem 2rem;
+  margin: 0;
+  border-radius: 12px;
+  background-color: #f8f6f68e;
+}
+
+@media only screen and (max-width: 600px) {
+  .car-card {
+    padding: 0;
+  }
+}

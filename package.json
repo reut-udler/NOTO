@@ -1,0 +1,37 @@
+{
+  "name": "noto-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon .",
+    "build": "cd noto-front && npm run build",
+    "install-front": "cd noto-front && npm install",
+    "heroku-postbuild": "npm run install-front && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "@hapi/joi-date": "^2.0.1",
+    "@popperjs/core": "^2.11.2",
+    "bcrypt": "^5.0.1",
+    "config": "^3.3.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "firebase-admin": "^10.0.1",
+    "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.1.7",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "node": "^17.3.1",
+    "sharp": "^0.29.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
