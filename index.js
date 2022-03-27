@@ -13,8 +13,8 @@ const expenseRouter = require("./routes/expenseRout");
 
 mongoose
   .connect(
-    process.env.MONGODB_URI ||
-      "mongodb+srv://reutudler:reutudler@notodb.s9aba.mongodb.net/notodb?retryWrites=true&w=majority"
+    "mongodb+srv://reutudler:reutudler@noto.uaowj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority" ||
+      process.env.MONGODB_URI
   )
   .then(() => {
     console.log("connected to mongo");

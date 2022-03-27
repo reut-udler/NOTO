@@ -48,7 +48,7 @@ class MyBizCards extends Component {
               role="button"
               aria-pressed="true"
             >
-              הוסף עסק
+              הרשם כנותן שירות
             </a>
           </div>
         </div>
