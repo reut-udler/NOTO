@@ -28,7 +28,10 @@ app.use(morgan("dev"));
 
 app.use(express.json());
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("noto-front/build"));
+  app.use(express.static(path.join(__dirname, "noto-front/build")));
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "noto-front", "index.html"));
+  });
 }
 
 app.use("/api/users", usersRouter);
