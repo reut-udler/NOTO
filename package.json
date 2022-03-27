@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
-    "heroku-postbuild": "cd noto-front && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "build": "cd noto-front && npm run build",
+    "install-front": "cd noto-front && npm install",
+    "heroku-postbuild": "npm run install-front && npm run build"
   },
   "keywords": [],
   "author": "",
