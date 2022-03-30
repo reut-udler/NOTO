@@ -107,26 +107,26 @@ router.get("/category/:bizCategory", async (req, res) => {
   }
 });
 
-/////////////////////////////
-/////// edit bizCard ///////
-router.put("/:id", authMw, async (req, res) => {
+////////////////////////////////////////////////////////
+
+///// show my business cards //////
+router.get("/myBiz/:owner", authMw, async (req, res) => {
+  try {
+    const bizCards = await BizCard.find({ owner: req.user._id });
+    res.set("Content-Type", "multipart/form-data");
+    res.send(bizCards);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+/* 
+///////////////////////////////
+/////// edit business card ///////
+router.put("/myBiz/:id", authMw, async (req, res) => {
   const { error } = validateBiz(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
   }
-  let bizCard = await BizCard.findOneAndUpdate(
-    { _id: req.params.id },
-    req.body
-  );
-  bizCard = await BizCard.findOne({
-    _id: req.params.id,
-  });
-  res.send(bizCard);
-});
-
-///////////////////////////////
-/////// edit business card ///////
-router.put("/my-business/:id", authMw, async (req, res) => {
   try {
     let bizCard = await BizCard.findOneAndUpdate(
       {
@@ -147,19 +147,8 @@ router.put("/my-business/:id", authMw, async (req, res) => {
   }
 });
 
-///// show all my business cards //////
-router.get("/my-business", authMw, async (req, res) => {
-  console.log(req.user);
-  try {
-    const bizCards = await BizCard.find({ owner: req.user._id });
-    res.send("bizCards");
-  } catch (e) {
-    res.status(400).send(e);
-  }
-});
-
 /////// show specific business card ///////
-router.get("/my-business/:id", authMw, async (req, res) => {
+router.get("/myBiz/:id", authMw, async (req, res) => {
   try {
     const bizCard = await BizCard.findOne({
       _id: req.params.id,
@@ -186,7 +175,7 @@ router.delete("/:id", authMw, async (req, res) => {
   }
   res.send("כרטיס העסק נמחק מחשבונך");
 });
-
+ */
 /////// show bizImage ///////
 router.get("/:id/bizImage", async (req, res) => {
   try {

@@ -34,7 +34,7 @@ const BizCard = (props) => {
           <div className="card flex-row mb-2 box-shadow">
             <BizImage className="img-fluid col-5 rounded float-left" />
             <div className="card-body d-flex flex-column align-items-start">
-              <h6 className="col-md-6 d-inline-block mb-2 text-primary">
+              <h6 className="d-inline-block mb-2 text-primary">
                 <b>קטגוריה: </b>
                 {props.bizCard.bizCategory}
               </h6>
@@ -53,17 +53,21 @@ const BizCard = (props) => {
               </p>
             </div>
             <div>
-              <h3>
-                <i
-                  className={
-                    hart === true
-                      ? "bi bi-heart-fill m-4 text-primary"
-                      : "bi bi-heart m-4 text-primary"
-                  }
-                  type="button"
-                  onClick={clickHandler}
-                ></i>
-              </h3>
+              {props.location === "/my-biz-cards" ? (
+                <div></div>
+              ) : (
+                <h3>
+                  <i
+                    className={
+                      hart === true
+                        ? "bi bi-heart-fill m-4 text-primary"
+                        : "bi bi-heart m-4 text-primary"
+                    }
+                    type="button"
+                    onClick={clickHandler}
+                  ></i>
+                </h3>
+              )}
             </div>
           </div>
         </div>

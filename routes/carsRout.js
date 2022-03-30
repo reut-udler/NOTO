@@ -10,12 +10,10 @@ router.post("/", authMw, async (req, res) => {
     res.status(400).send(error.details[0].message);
     return;
   }
-
   let car = new Car({
     ...req.body,
     owner: req.user._id,
   });
-
   try {
     await car.save();
     res.status(201).send(car);
@@ -24,7 +22,7 @@ router.post("/", authMw, async (req, res) => {
   }
 });
 
-//// show all my cars //////
+/////// show all my cars ///////
 router.get("/my-cars", authMw, async (req, res) => {
   try {
     const cars = await Car.find({ owner: req.user._id });
@@ -41,7 +39,6 @@ router.get("/my-cars/:id", authMw, async (req, res) => {
       _id: req.params.id,
       owner: req.user._id,
     });
-
     if (!car) {
       return res.status(404).send("הרכב שביקשת לא קיים בחשבונך");
     }

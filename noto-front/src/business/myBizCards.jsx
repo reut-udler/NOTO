@@ -1,16 +1,27 @@
 import React, { Component } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 import bizService from "./bizService";
 import BizCard from "./bizCard";
 
 class MyBizCards extends Component {
-  state = { bizCards: [] };
+  state = {
+    bizCards: [],
+    favorites: [],
+    loader: true,
+  };
 
   async componentDidMount() {
-    const { data } = await bizService.getMyBizCards();
-
-    if (data.length) {
+    const data = await bizService.getMyBizCards();
+    const carData = data.data;
+    if (carData.length) {
       this.setState({
-        bizCards: data,
+        bizCards: carData,
+        loader: false,
+      });
+    }
+    {
+      this.setState({
+        loader: false,
       });
     }
   }
@@ -18,11 +29,12 @@ class MyBizCards extends Component {
   getText() {
     const { bizCards } = this.state;
     return bizCards.length > 0 ? (
-      <h5> "העסקים שלך:"</h5>
+      <h3>רשימת העסקים שלך:</h3>
     ) : (
-      <h5>
-        אין לך עסקים רשומים. לחץ על כפתור 'הרשם כנותן שירות' כדי להוסיף עסק
-      </h5>
+      <div>
+        <h3>אין לך עסקים רשומים</h3>
+        <h5>לחץ על כפתור 'הרשם כנותן שירות' כדי להוסיף עסק</h5>
+      </div>
     );
   }
 
@@ -30,28 +42,32 @@ class MyBizCards extends Component {
     const { bizCards } = this.state;
 
     return (
-      <div className="container mt-5 ">
-        <div className="row">
-          <div className="col-md-4 mx-auto text-center">
-            <h3 className="text-center font-weight-bold">אהלן אהלן</h3>
-            {this.getText()}
+      <div className="mx-auto text-center mt-5">
+        {this.state.loader ? (
+          <ClipLoader size={150} color={"#fff"} loading={this.state.loader} />
+        ) : (
+          <div className="container mt-5 ">
+            <div className="row">
+              <div className="col-md-8 mx-auto text-center">
+                <h3 className="text-center font-weight-bold m-5">
+                  {this.getText()}
+                </h3>
+              </div>
+            </div>
+            <div className="row">
+              {bizCards.map((bizCard) => (
+                <BizCard
+                  className="biz-card"
+                  key={bizCard._id}
+                  bizCard={bizCard}
+                  onFavorites={this.favoritesHandler}
+                  favorites={this.state.favorites}
+                  location={this.props.location.pathname}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="row mt-5 d-flex justify-content-center">
-          {bizCards.map((bizCard) => (
-            <BizCard key={bizCard._id} bizCard={bizCard} />
-          ))}
-          <div className="mt-5 mx-auto text-center">
-            <a
-              href="/create-business"
-              className="btn btn-primary btn-lg active"
-              role="button"
-              aria-pressed="true"
-            >
-              הרשם כנותן שירות
-            </a>
-          </div>
-        </div>
+        )}
       </div>
     );
   }

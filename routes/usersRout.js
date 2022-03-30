@@ -28,12 +28,6 @@ router.post("/", async (req, res) => {
   res.send(_.pick(user, ["name", "_id", "email"]));
 });
 
-/////// show my card ///////
-router.get("/me", authMw, async (req, res) => {
-  const user = await User.findById(req.user._id).select("-password");
-  res.send(_.pick(user, ["name", "_id", "email"]));
-});
-
 /////// add to favorites ///////
 router.patch("/favorites", authMw, async (req, res) => {
   await BizCard.find({ _id: { $in: req.favorite } });
@@ -57,6 +51,7 @@ router.patch("/favorites", authMw, async (req, res) => {
 /////// show favorites ///////
 router.get("/favorites", authMw, async (req, res) => {
   const user = await User.findById(req.user._id);
+  if (!user) return;
   try {
     const bizCards = await BizCard.find({ _id: user.favorites });
     res.send(bizCards);

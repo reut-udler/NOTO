@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const http = require("http").Server(app);
 const morgan = require("morgan");
 const cors = require("cors");
 
@@ -9,12 +8,11 @@ const usersRouter = require("./routes/usersRout");
 const authRouter = require("./routes/auth");
 const carsRouter = require("./routes/carsRout");
 const bizRouter = require("./routes/bizRout");
-const expenseRouter = require("./routes/expenseRout");
 
 mongoose
   .connect(
-    "mongodb+srv://reutudler:reutudler@noto.uaowj.mongodb.net/NOTO?retryWrites=true&w=majority" ||
-      process.env.MONGODB_URI
+    process.env.MONGODB_URI ||
+      "mongodb://reutudler:reutudler@notodb-shard-00-00.s9aba.mongodb.net:27017,notodb-shard-00-01.s9aba.mongodb.net:27017,notodb-shard-00-02.s9aba.mongodb.net:27017/notodb?ssl=true&replicaSet=atlas-b5w6o7-shard-0&authSource=admin&retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("connected to mongo");
@@ -35,7 +33,6 @@ app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/cars", carsRouter);
 app.use("/api/biz", bizRouter);
-app.use("/api/cars/my-cars", expenseRouter);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

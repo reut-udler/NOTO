@@ -26,15 +26,6 @@ const Car = ({ car: { carNumber, manufacturer, model, manYear, _id } }) => {
               role="button"
               aria-pressed="true"
             >
-              ערוך פרטים
-            </a>
-
-            <a
-              href={`/car-page/${_id}`}
-              className="btn btn-outline-primary m-2"
-              role="button"
-              aria-pressed="true"
-            >
               כרטיס רכב
             </a>
 

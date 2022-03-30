@@ -71,7 +71,7 @@ class CreateBiz extends Form {
 
     try {
       await bizService.createBiz(data);
-      window.location = "./business";
+      window.location = "./my-biz-cards";
     } catch ({ response }) {
       if (response.status === 400) {
         this.setState({ errors: { bizAdress: response.data } });

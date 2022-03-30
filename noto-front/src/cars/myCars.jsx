@@ -7,7 +7,6 @@ class MyCars extends Component {
 
   async componentDidMount() {
     const { data } = await carService.getMyCars();
-
     if (data.length) {
       this.setState({
         cars: data,

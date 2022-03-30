@@ -18,8 +18,6 @@ import CreateCar from "./cars/createCar";
 import EditCar from "./cars/editCar";
 import ProtectedRoute from "./common/protectedRoute";
 import DeleteCar from "./cars/deleteCar";
-import CarsExpenses from "./cars/carsExpenses";
-import NewExpense from "./expenses/createExpense";
 import Business from "./business/bizPage";
 import CreateBiz from "./business/createbusiness";
 import FavoritesPage from "./business/favoritesPage";
@@ -56,8 +54,6 @@ class App extends Component {
             <ProtectedRoute path="/my-cars/delete/:id" component={DeleteCar} />
             <ProtectedRoute path="/my-cars" component={MyCars} />
             <ProtectedRoute path="/create-car" component={CreateCar} />
-            <ProtectedRoute path="/car-page" component={CarsExpenses} />
-            <ProtectedRoute path="/create-expense" component={NewExpense} />
             <ProtectedRoute path="/create-business" component={CreateBiz} />
             <ProtectedRoute path="/favorites" component={FavoritesPage} />
             <ProtectedRoute path="/my-biz-cards" component={MyBizCards} />
