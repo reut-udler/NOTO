@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema(
       maxlength: 255,
     },
     favorites: Array,
+    bizCards: Array,
     tokens: [
       {
         token: {

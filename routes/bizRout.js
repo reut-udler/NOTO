@@ -107,8 +107,6 @@ router.get("/category/:bizCategory", async (req, res) => {
   }
 });
 
-////////////////////////////////////////////////////////
-
 ///// show my business cards //////
 router.get("/myBiz/:owner", authMw, async (req, res) => {
   try {
@@ -119,63 +117,7 @@ router.get("/myBiz/:owner", authMw, async (req, res) => {
     res.status(400).send(e);
   }
 });
-/* 
-///////////////////////////////
-/////// edit business card ///////
-router.put("/myBiz/:id", authMw, async (req, res) => {
-  const { error } = validateBiz(req.body);
-  if (error) {
-    res.status(400).send(error.details[0].message);
-  }
-  try {
-    let bizCard = await BizCard.findOneAndUpdate(
-      {
-        _id: req.params.id,
-      },
-      req.body
-    );
-    if (!bizCard) {
-      return res.status(404).send("כרטיס העסק שביקשת לא קיים בחשבונך");
-    }
 
-    bizCard = await BizCard.findOne({
-      _id: req.params.id,
-    });
-    res.send(bizCard);
-  } catch (e) {
-    res.status(400).send(e);
-  }
-});
-
-/////// show specific business card ///////
-router.get("/myBiz/:id", authMw, async (req, res) => {
-  try {
-    const bizCard = await BizCard.findOne({
-      _id: req.params.id,
-      owner: req.user._id,
-    });
-
-    if (!bizCard) {
-      return res.status(404).send("כרטיס העסק שביקשת לא קיים במאגר");
-    }
-    res.send(bizCard);
-  } catch (e) {
-    res.status(400).send(e);
-  }
-});
-
-/////// delete business card ///////
-router.delete("/:id", authMw, async (req, res) => {
-  const bizCard = await BizCard.findOneAndRemove({
-    _id: req.params.id,
-    owner: req.user._id,
-  });
-  if (!bizCard) {
-    return res.status(404).send("כרטיס העסק שביקשת לא קיים בחשבונך");
-  }
-  res.send("כרטיס העסק נמחק מחשבונך");
-});
- */
 /////// show bizImage ///////
 router.get("/:id/bizImage", async (req, res) => {
   try {

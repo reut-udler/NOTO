@@ -18,7 +18,7 @@ import CreateCar from "./cars/createCar";
 import EditCar from "./cars/editCar";
 import ProtectedRoute from "./common/protectedRoute";
 import DeleteCar from "./cars/deleteCar";
-import Business from "./business/bizPage";
+import BizPage from "./business/bizPage";
 import CreateBiz from "./business/createbusiness";
 import FavoritesPage from "./business/favoritesPage";
 import MyBizCards from "./business/myBizCards";
@@ -49,12 +49,15 @@ class App extends Component {
         </header>
 
         <main className="container flex-fill">
-          <Switch>
+          <Switch user={user}>
             <ProtectedRoute path="/my-cars/edit/:id" component={EditCar} />
             <ProtectedRoute path="/my-cars/delete/:id" component={DeleteCar} />
             <ProtectedRoute path="/my-cars" component={MyCars} />
             <ProtectedRoute path="/create-car" component={CreateCar} />
-            <ProtectedRoute path="/create-business" component={CreateBiz} />
+            <ProtectedRoute
+              path="/create-business"
+              render={(props) => <CreateBiz {...props} user={user} />}
+            />
             <ProtectedRoute path="/favorites" component={FavoritesPage} />
             <ProtectedRoute path="/my-biz-cards" component={MyBizCards} />
 
@@ -62,7 +65,10 @@ class App extends Component {
             <Route path="/signup" component={SignUp} />
             <Route path="/signin" component={Signin} />
             <Route path="/logout" component={Logout} />
-            <Route path="/business" component={Business} />
+            <Route
+              path="/business"
+              render={(props) => <BizPage {...props} user={user} />}
+            />
             <Route exact path="/" component={Home} />
           </Switch>
         </main>

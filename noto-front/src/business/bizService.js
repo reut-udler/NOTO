@@ -31,9 +31,8 @@ export function showBizImage(bizId) {
   return http.get(`${apiUrl}/biz/${bizId}/bizImage`);
 }
 
-/////////////////////
-export function getMyBizCards(owner) {
-  return http.get(`${apiUrl}/biz/myBiz/${owner}`);
+export function getMyBizCards(ownerId) {
+  return http.get(`${apiUrl}/biz/myBiz/${ownerId}`);
 }
 
 const bizService = {

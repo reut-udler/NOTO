@@ -36,11 +36,6 @@ const Navbar = ({ user }) => {
                 נותני שירות
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/my-biz-cards">
-                העסקים שלי
-              </NavLink>
-            </li>
             {user && (
               <li className="nav-item">
                 <NavLink className="nav-link" to="/favorites">

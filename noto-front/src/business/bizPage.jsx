@@ -4,12 +4,16 @@ import bizService from "./bizService";
 import userService from "./../users/userService";
 import BizCard from "./bizCard";
 
-class Business extends Component {
-  state = {
-    bizCards: [],
-    favorites: [],
-    loader: true,
-  };
+class BizPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bizCards: [],
+      favorites: [],
+      loader: true,
+      bizOwner: false,
+    };
+  }
   userInputName = React.createRef();
   userInputCategory = React.createRef();
 
@@ -21,6 +25,7 @@ class Business extends Component {
 
   async componentDidMount() {
     const { data } = await bizService.getAllBizCards();
+
     const fav = await userService.getFavorites();
     if (data.length) {
       this.setState({
@@ -28,6 +33,20 @@ class Business extends Component {
         favorites: fav.data,
         loader: false,
       });
+      const isBizOwner = () => {
+        if (!!this.props.user) {
+          const ownerId = this.props.user._id;
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].owner == ownerId) {
+              this.setState({
+                bizOwner: true,
+              });
+              return;
+            }
+          }
+        }
+      };
+      isBizOwner();
     }
     {
       this.setState({
@@ -47,6 +66,7 @@ class Business extends Component {
   };
 
   findBizCategoryHandle = async () => {
+    console.log(this.props);
     const bizCategory = this.userInputCategory.current.value;
     try {
       const { data } = await bizService.findBizCategory(bizCategory);
@@ -71,7 +91,7 @@ class Business extends Component {
         ) : (
           <div className="page-container mt-5 p-2">
             <div className="row ">
-              <div>
+              <div className="text-end">
                 <a
                   href="/create-business"
                   className="btn btn-outline-primary m-3"
@@ -80,6 +100,16 @@ class Business extends Component {
                 >
                   הרשם כנותן שירות
                 </a>
+                {!!this.state.bizOwner && (
+                  <a
+                    href="/my-biz-cards"
+                    className="btn btn-outline-primary m-3"
+                    role="button"
+                    aria-pressed="true"
+                  >
+                    העסקים שלי
+                  </a>
+                )}
               </div>
               <div className="col-ml-5 mx-auto text-center">
                 <h3 className="text-center font-weight-bold">הי נהגוס</h3>
@@ -145,4 +175,4 @@ class Business extends Component {
   }
 }
 
-export default Business;
+export default BizPage;
