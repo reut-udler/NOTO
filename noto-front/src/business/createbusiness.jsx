@@ -106,6 +106,13 @@ class CreateBiz extends Form {
 
               <div className="mt-5 mx-auto text-center">
                 {this.renderButton("שמור")}
+
+                <button
+                  onClick={this.handleCancel}
+                  className="btn btn-dark my-auto me-5 "
+                >
+                  בטל
+                </button>
               </div>
             </div>
           }

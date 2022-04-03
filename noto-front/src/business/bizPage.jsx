@@ -163,8 +163,9 @@ class BizPage extends Component {
                   className="biz-card"
                   key={bizCard._id}
                   bizCard={bizCard}
-                  onFavorites={this.favoritesHandler}
                   favorites={this.state.favorites}
+                  onFavorites={this.favoritesHandler}
+                  user={!!this.props.user}
                 />
               ))}
             </div>

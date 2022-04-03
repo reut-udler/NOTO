@@ -32,6 +32,10 @@ class Form extends Component {
     return errors;
   };
 
+  handleCancel = () => {
+    this.props.history.push("/my-biz-cards");
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
     const errors = this.validate();

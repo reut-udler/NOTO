@@ -37,3 +37,12 @@ body {
     max-width: 30%;
   }
 }
+
+.btn-circle.btn-xl {
+  width: 8rem;
+  height: 3rem;
+  border: #f8f6f68e solid;
+  border-radius: 50rem;
+  font-size: 1.1rem;
+  text-align: center;
+}

@@ -35,6 +35,18 @@ export function getMyBizCards(ownerId) {
   return http.get(`${apiUrl}/biz/myBiz/${ownerId}`);
 }
 
+export function editBizCard(bizId, bizCard) {
+  return http.put(`${apiUrl}/biz/edit/${bizId}`, bizCard);
+}
+
+export function getBizCard(bizId) {
+  return http.get(`${apiUrl}/biz/my-biz-card/${bizId}`);
+}
+
+export function deleteBiz(bizId) {
+  return http.delete(`${apiUrl}/biz/delete/${bizId}`);
+}
+
 const bizService = {
   getAllBizCards,
   createBiz,
@@ -43,6 +55,9 @@ const bizService = {
   addFavorites,
   showBizImage,
   getMyBizCards,
+  editBizCard,
+  getBizCard,
+  deleteBiz,
 };
 
 export default bizService;

@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
   }
   let user = await User.findOne({ email: req.body.email });
   if (!user) {
-    res.status(400).send("שם משתמש או סיסמא שגויים");
+    res.status(403).send("שם משתמש או סיסמא שגויים");
     return;
   }
   const isValidPassword = await bcrypt.compare(
@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
     user.password
   );
   if (!isValidPassword) {
-    res.status(400).send("שם משתמש או סיסמא שגויים");
+    res.status(403).send("שם משתמש או סיסמא שגויים");
     return;
   }
   const token = user.generateAuthToken();

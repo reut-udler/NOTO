@@ -1,14 +1,16 @@
 {
   "name": "noto-back",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.16.1"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
     "build": "cd noto-front && npm run build",
-    "install-front": "cd noto-front && npm install",
-    "heroku-postbuild": "npm run install-front && npm run build"
+    "heroku-postbuils": "NPM_CONFIG_PRODUCTION=false npm install --perfix noto-front && npm install && npm run build --perfix noto-front"
   },
   "keywords": [],
   "author": "",

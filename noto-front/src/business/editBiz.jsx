@@ -2,7 +2,7 @@ import Joi from "joi";
 import Form from "../common/form";
 import bizService from "./bizService";
 
-class EditCar extends Form {
+class EditBizCard extends Form {
   state = {
     form: {
       _id: "",
@@ -12,8 +12,6 @@ class EditCar extends Form {
       bizDescription: "",
       bizAdress: "",
       bizPhone: "",
-    },
-    file: {
       bizImage: "",
     },
   };
@@ -77,7 +75,7 @@ class EditCar extends Form {
 
     try {
       await bizService.editBiz(data);
-      window.location = "./business";
+      window.location = "/my-biz-cards";
     } catch ({ response }) {
       if (response.status === 400) {
         this.setState({ errors: { bizAdress: response.data } });
@@ -85,19 +83,74 @@ class EditCar extends Form {
     }
   }
 
-  async componentDidMount() {}
+  //////////////////////////////////
+
+  mapToViewModel({
+    _id,
+    owner,
+    bizName,
+    bizCategory,
+    bizDescription,
+    bizAdress,
+    bizPhone,
+    bizImage,
+  }) {
+    return {
+      _id,
+      owner,
+      bizName,
+      bizCategory,
+      bizDescription,
+      bizAdress,
+      bizPhone,
+      bizImage,
+    };
+  }
+  mapToViewImage({ bizImage }) {
+    return {
+      bizImage,
+    };
+  }
+
+  async componentDidMount() {
+    const bizId = this.props.match.params.id;
+    const { data } = await bizService.getBizCard(bizId);
+
+    this.setState({
+      form: this.mapToViewModel(data),
+    });
+  }
+
+  handleCancel = () => {
+    this.props.history.push("/my-biz-cards");
+  };
+
+  handleEdit = (e) => {
+    e.preventDefault();
+    const { form, file } = this.state;
+    const { error } = Joi.object({ ...this.schema }).validate(form, file, {
+      abortEarly: false,
+    });
+    if (!error) {
+      this.doSubmit();
+    }
+    console.log(error);
+    return error;
+  };
+
+  ///////////////////////////
 
   render() {
     return (
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-5 mx-auto text-center">
-            <h3>הצטרף למאגר בעלי העסקים שלנו</h3>
+            <h3>ערוך עסק</h3>
           </div>
         </div>
 
         <form
-          onSubmit={this.handleSubmit}
+          onSubmit={this.handleEdit}
           noValidate="novalidate"
           autoComplete="off"
           method="post"
@@ -114,6 +167,13 @@ class EditCar extends Form {
 
               <div className="mt-5 mx-auto text-center">
                 {this.renderButton("שמור")}
+
+                <button
+                  onClick={this.handleCancel}
+                  className="btn btn-dark my-auto me-5 "
+                >
+                  בטל
+                </button>
               </div>
             </div>
           }
@@ -123,4 +183,4 @@ class EditCar extends Form {
   }
 }
 
-export default EditCar;
+export default EditBizCard;
