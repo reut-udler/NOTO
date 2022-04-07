@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -25,7 +26,15 @@ app.use(morgan("dev"));
 
 app.use(express.json());
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("noto-front/build"));
+  app.use(express.static(path.join(__dirname, "/noto-front/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "noto-front", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("Running...");
+  });
 }
 
 app.use("/api/users", usersRouter);
