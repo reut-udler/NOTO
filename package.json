@@ -8,7 +8,7 @@
     "dev": "nodemon .",
     "build": "cd noto-front && npm run build",
     "install-front": "cd noto-front && npm install",
-    "heroku-postbuild": "npm run install-front && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-front && npm run build"
   },
   "keywords": [],
   "author": "",

@@ -11,7 +11,7 @@ const bizRouter = require("./routes/bizRout");
 
 mongoose
   .connect(
-    "mongodb+srv://reutudler:reutudler@notodb.s9aba.mongodb.net/notodb?retryWrites=true&w=majority"
+    "mongodb+srv://reutudler:eJ53Guyvm7ySeMra@notodb.s9aba.mongodb.net/notodb?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("connected to mongo");
