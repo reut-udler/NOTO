@@ -10,8 +10,6 @@ class EditBizCard extends Form {
       bizDescription: "",
       bizAdress: "",
       bizPhone: "",
-    },
-    file: {
       bizImage: "",
     },
     newBizImage: false,
@@ -76,12 +74,14 @@ class EditBizCard extends Form {
     }
 
     try {
+
       await bizService.editBizCard(form._id, data);
       window.location = "/my-biz-cards";
     } catch ({ response }) {
       console.log(response);
     }
   }
+
 
   mapToViewModel({
     _id,
@@ -114,13 +114,16 @@ class EditBizCard extends Form {
 
     this.setState({
       form: this.mapToViewModel(data),
+
       file: this.mapToViewImage(data).bizImage,
+
     });
   }
 
   handleCancel = () => {
     this.props.history.push("/my-biz-cards");
   };
+
 
   render() {
     return (
@@ -132,7 +135,9 @@ class EditBizCard extends Form {
         </div>
 
         <form
+
           onSubmit={this.handleEditBiz}
+
           noValidate="novalidate"
           autoComplete="off"
           method="post"

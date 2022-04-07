@@ -32,7 +32,7 @@ class Form extends Component {
     return errors;
   };
 
-  //submit from create pages
+
   handleSubmit = (e) => {
     e.preventDefault();
     const errors = this.validate();

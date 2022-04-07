@@ -37,6 +37,7 @@ export function getMyBizCards(ownerId) {
 
 export function editBizCard(bizId, data) {
   return http.put(`${apiUrl}/biz/edit/${bizId}`, data, config);
+
 }
 
 export function getBizCard(bizId) {
