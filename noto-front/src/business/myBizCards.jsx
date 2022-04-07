@@ -18,8 +18,7 @@ class MyBizCards extends Component {
         bizCards: carData,
         loader: false,
       });
-    }
-    {
+    } else {
       this.setState({
         loader: false,
       });
@@ -48,10 +47,20 @@ class MyBizCards extends Component {
         ) : (
           <div className="container mt-5 ">
             <div className="row">
+              <div className="text-end">
+                <a
+                  href="/create-business"
+                  className="btn btn-primary btn-circle btn-xl"
+                  role="button"
+                  aria-pressed="true"
+                >
+                  הוסף עסק
+                </a>
+              </div>
               <div className="col-md-8 mx-auto text-center">
-                <h3 className="text-center font-weight-bold m-5">
+                <div className="text-center font-weight-bold">
                   {this.getText()}
-                </h3>
+                </div>
               </div>
             </div>
             <div className="row">

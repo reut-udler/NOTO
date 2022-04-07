@@ -17,8 +17,7 @@ class FavoritesPage extends Component {
         favorites: data,
         loader: false,
       });
-    }
-    {
+    } else {
       this.setState({
         loader: false,
       });

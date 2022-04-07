@@ -12,9 +12,7 @@ router.post("/", async (req, res) => {
     res.status(400).send(error.details[0].message);
     return;
   }
-
   let user = await User.findOne({ email: req.body.email });
-
   if (user) {
     res.status(400).send("המשתמש קיים במערכת");
     return;

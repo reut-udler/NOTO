@@ -38,7 +38,7 @@ const BizCard = (props) => {
                 <b>קטגוריה: </b>
                 {props.bizCard.bizCategory}
               </h6>
-              <h3 className="row">{props.bizCard.bizName}</h3>
+              <h3 className="d-inline-block mb-2">{props.bizCard.bizName}</h3>
               <p className="card-text mb-auto">
                 <b>תיאור העסק: </b>
                 {props.bizCard.bizDescription}
@@ -52,23 +52,39 @@ const BizCard = (props) => {
                 {props.bizCard.bizPhone}
               </p>
             </div>
-            <div>
-              {props.location === "/my-biz-cards" ? (
-                <div></div>
-              ) : (
-                <h3>
-                  <i
-                    className={
-                      hart === true
-                        ? "bi bi-heart-fill m-4 text-primary"
-                        : "bi bi-heart m-4 text-primary"
-                    }
-                    type="button"
-                    onClick={clickHandler}
-                  ></i>
-                </h3>
-              )}
-            </div>
+            {props.location === "/my-biz-cards" && (
+              <div className="mt-3 ms-3">
+                <a
+                  href={`/edit/${bizId}`}
+                  className="btn btn-primary m-2"
+                  role="button"
+                  aria-pressed="true"
+                >
+                  ערוך
+                </a>
+                <a
+                  href={`/delete/${bizId}`}
+                  className="btn btn-primary m-2"
+                  role="button"
+                  aria-pressed="true"
+                >
+                  מחק
+                </a>
+              </div>
+            )}
+            {props.user && props.location !== "/my-biz-cards" && (
+              <h3>
+                <i
+                  className={
+                    hart === true
+                      ? "bi bi-heart-fill m-4 text-primary"
+                      : "bi bi-heart m-4 text-primary"
+                  }
+                  type="button"
+                  onClick={clickHandler}
+                ></i>
+              </h3>
+            )}
           </div>
         </div>
       </div>

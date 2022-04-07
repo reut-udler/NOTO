@@ -34,7 +34,7 @@ class MyCars extends Component {
         <div className="row">
           <div className="col-md-4 mx-auto text-center">
             <h3 className="text-center font-weight-bold">הי נהגוס</h3>
-            <h5>{this.getText()}</h5>
+            <div>{this.getText()}</div>
           </div>
         </div>
         <div className="row mt-5 d-flex justify-content-center">

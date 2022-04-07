@@ -2,11 +2,9 @@ import Joi from "joi";
 import Form from "../common/form";
 import bizService from "./bizService";
 
-class EditCar extends Form {
+class EditBizCard extends Form {
   state = {
     form: {
-      _id: "",
-      owner: "",
       bizName: "",
       bizCategory: "",
       bizDescription: "",
@@ -16,6 +14,7 @@ class EditCar extends Form {
     file: {
       bizImage: "",
     },
+    newBizImage: false,
   };
 
   schema = {
@@ -66,38 +65,74 @@ class EditCar extends Form {
   async doSubmit() {
     const { form, file } = this.state;
     const data = new FormData();
-    data.append("_id", form._id);
-    data.append("owner", form.owner);
-    data.append("bizName", form.bizName);
-    data.append("bizCategory", form.bizCategory);
-    data.append("bizDescription", form.bizDescription);
-    data.append("bizAdress", form.bizAdress);
-    data.append("bizPhone", form.bizPhone);
-    data.append("bizImage", file);
+    data.set("bizName", form.bizName);
+    data.set("bizCategory", form.bizCategory);
+    data.set("bizDescription", form.bizDescription);
+    data.set("bizAdress", form.bizAdress);
+    data.set("bizPhone", form.bizPhone);
+
+    if (this.state.newBizImage) {
+      data.set("bizImage", file);
+    }
 
     try {
-      await bizService.editBiz(data);
-      window.location = "./business";
+      await bizService.editBizCard(form._id, data);
+      window.location = "/my-biz-cards";
     } catch ({ response }) {
-      if (response.status === 400) {
-        this.setState({ errors: { bizAdress: response.data } });
-      }
+      console.log(response);
     }
   }
 
-  async componentDidMount() {}
+  mapToViewModel({
+    _id,
+    owner,
+    bizName,
+    bizCategory,
+    bizDescription,
+    bizAdress,
+    bizPhone,
+  }) {
+    return {
+      _id,
+      owner,
+      bizName,
+      bizCategory,
+      bizDescription,
+      bizAdress,
+      bizPhone,
+    };
+  }
+  mapToViewImage({ bizImage }) {
+    return {
+      bizImage,
+    };
+  }
+
+  async componentDidMount() {
+    const bizId = this.props.match.params.id;
+    const { data } = await bizService.getBizCard(bizId);
+
+    this.setState({
+      form: this.mapToViewModel(data),
+      file: this.mapToViewImage(data).bizImage,
+    });
+  }
+
+  handleCancel = () => {
+    this.props.history.push("/my-biz-cards");
+  };
 
   render() {
     return (
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-5 mx-auto text-center">
-            <h3>הצטרף למאגר בעלי העסקים שלנו</h3>
+            <h3>ערוך עסק</h3>
           </div>
         </div>
 
         <form
-          onSubmit={this.handleSubmit}
+          onSubmit={this.handleEditBiz}
           noValidate="novalidate"
           autoComplete="off"
           method="post"
@@ -114,6 +149,13 @@ class EditCar extends Form {
 
               <div className="mt-5 mx-auto text-center">
                 {this.renderButton("שמור")}
+
+                <button
+                  onClick={this.handleCancel}
+                  className="btn btn-dark my-auto me-5 "
+                >
+                  בטל
+                </button>
               </div>
             </div>
           }
@@ -123,4 +165,4 @@ class EditCar extends Form {
   }
 }
 
-export default EditCar;
+export default EditBizCard;

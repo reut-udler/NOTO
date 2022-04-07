@@ -16,7 +16,7 @@ router.post("/", authMw, async (req, res) => {
   });
   try {
     await car.save();
-    res.status(201).send(car);
+    res.status(200).send(car);
   } catch (e) {
     res.status(400).send("רכב זה כבר רשום במערכת");
   }
@@ -40,7 +40,7 @@ router.get("/my-cars/:id", authMw, async (req, res) => {
       owner: req.user._id,
     });
     if (!car) {
-      return res.status(404).send("הרכב שביקשת לא קיים בחשבונך");
+      return res.status(400).send("הרכב שביקשת לא קיים בחשבונך");
     }
     res.send(car);
   } catch (e) {
@@ -68,7 +68,7 @@ router.delete("/:id", authMw, async (req, res) => {
     owner: req.user._id,
   });
   if (!car) {
-    return res.status(404).send("הרכב שביקשת לא קיים בחשבונך");
+    return res.status(400).send("הרכב שביקשת לא קיים בחשבונך");
   }
   res.send("הרכב נמחק מחשבונך");
 });

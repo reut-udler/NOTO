@@ -4,13 +4,13 @@ const _ = require("lodash");
 
 const { BizCard, validateBiz } = require("../models/bizModel");
 const authMw = require("../middlewares/authMw");
-const upload = require("../middlewares/upload");
+const { upload, editImage } = require("../middlewares/upload");
 
-/////// create business card ///////
+/////// create biz card ///////
 router.post("/", authMw, upload.single("bizImage"), async (req, res) => {
   const { error } = validateBiz(req.body);
   if (error) {
-    res.status(404).send(error.details[0].message);
+    res.status(400).send(error.details[0].message);
     return;
   }
 
@@ -34,7 +34,7 @@ router.post("/", authMw, upload.single("bizImage"), async (req, res) => {
 
     try {
       await bizCard.save();
-      res.status(201).send(bizCard);
+      res.status(200).send(bizCard);
     } catch (e) {
       res.status(400).send("בכתובת זו כבר קיים עסק רשום");
     }
@@ -52,13 +52,64 @@ router.post("/", authMw, upload.single("bizImage"), async (req, res) => {
   });
   try {
     await bizCard.save();
-    return res.status(201).send(bizCard);
+    return res.status(200).send(bizCard);
   } catch (e) {
     res.status(400).send("בכתובת זו כבר קיים עסק רשום");
   }
 });
 
-/////// show all business cards //////
+/////// edit bizCard ///////
+router.put(
+  "/edit/:bizId",
+  authMw,
+  upload.single("bizImage"),
+  async (req, res) => {
+    const { error } = validateBiz(req.body);
+    if (error) {
+      res.status(400).send(error.details[0].message);
+      return;
+    }
+
+    if (req.file) {
+      const buffer = await sharp(req.file.buffer)
+        .resize({ width: 250, height: 250 })
+        .jpeg()
+        .toBuffer();
+
+      let bizCard = await BizCard.findOneAndUpdate(
+        { _id: req.params.bizId },
+        {
+          ...req.body,
+          bizImage: buffer,
+        }
+      );
+
+      try {
+        await bizCard.save();
+        res.status(200).send(bizCard);
+      } catch (e) {
+        res.status(400).send("הבקשה לא עברה. בבקשה נסה שוב");
+      }
+    } else {
+      console.log("hi");
+      let bizCard = await BizCard.findOneAndUpdate(
+        { _id: req.params.bizId },
+        {
+          ...req.body,
+        }
+      );
+      try {
+        console.log("hi2");
+        await bizCard.save();
+        res.send(bizCard);
+      } catch (e) {
+        res.status(400).send(e);
+      }
+    }
+  }
+);
+
+/////// show all biz cards //////
 router.get("/", async (req, res) => {
   try {
     const bizCards = await BizCard.find();
@@ -107,7 +158,7 @@ router.get("/category/:bizCategory", async (req, res) => {
   }
 });
 
-///// show my business cards //////
+///// show my biz cards //////
 router.get("/myBiz/:owner", authMw, async (req, res) => {
   try {
     const bizCards = await BizCard.find({ owner: req.user._id });
@@ -129,6 +180,37 @@ router.get("/:id/bizImage", async (req, res) => {
     res.send(bizCard.bizImage);
   } catch (e) {
     res.status(400).send();
+  }
+});
+
+/////// show specific bizCard ///////
+router.get("/my-biz-card/:bizId", authMw, async (req, res) => {
+  try {
+    const bizCard = await BizCard.findOne({
+      _id: req.params.bizId,
+    });
+    if (!bizCard) {
+      return res.status(400).send("העסק שביקשת לא קיים בחשבונך");
+    }
+    res.send(bizCard);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
+/////// delete biz card ///////
+router.delete("/delete/:bizId", authMw, async (req, res) => {
+  try {
+    console.log(req.params.bizId);
+    const bizCard = await BizCard.findOneAndRemove({
+      _id: req.params.bizId,
+    });
+    if (!bizCard) {
+      return res.status(400).send("העסק שביקשת לא קיים בחשבונך");
+    }
+    res.send(bizCard.bizName + " נמחק מחשבונך");
+  } catch (e) {
+    res.status(400).send("העסק שביקשת לא קיים בחשבונך");
   }
 });
 
