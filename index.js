@@ -23,19 +23,19 @@ mongoose
 
 app.use(cors());
 app.use(morgan("dev"));
-
 app.use(express.json());
-if (process.env.NODE_ENV === "production") {
+
+
   app.use(express.static(path.join(__dirname, "/noto-front/build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "noto-front", "build", "index.html"));
+    res.sendFile(path.join(__dirname, "/noto-front/build", "index.html"));
   });
 } else {
   app.get("/", (req, res) => {
     res.send("Running...");
   });
-}
+
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
