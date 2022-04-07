@@ -35,5 +35,5 @@ app.use("/api/biz", bizRouter);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`connected on port ${PORT}`);
+  console.log(`now connected on port ${PORT}`);
 });
