@@ -16,7 +16,7 @@ router.post("/", authMw, upload.single("bizImage"), async (req, res) => {
 
   let bizCard = await BizCard.findOne({ bizAdress: req.body.bizAdress });
   if (bizCard) {
-    res.status(400).send("בכתובת זו כבר קיים עסק רשום");
+    res.status(403).send("בכתובת זו כבר קיים עסק רשום");
     return;
   }
 
@@ -36,7 +36,7 @@ router.post("/", authMw, upload.single("bizImage"), async (req, res) => {
       await bizCard.save();
       res.status(200).send(bizCard);
     } catch (e) {
-      res.status(400).send("בכתובת זו כבר קיים עסק רשום");
+      res.status(403).send("בכתובת זו כבר קיים עסק רשום");
     }
   }
 
@@ -54,7 +54,7 @@ router.post("/", authMw, upload.single("bizImage"), async (req, res) => {
     await bizCard.save();
     return res.status(200).send(bizCard);
   } catch (e) {
-    res.status(400).send("בכתובת זו כבר קיים עסק רשום");
+    res.status(403).send("בכתובת זו כבר קיים עסק רשום");
   }
 });
 
@@ -74,6 +74,7 @@ router.put(
       res.status(400).send("בכתובת זו כבר קיים עסק רשום");
       return;
     } */
+
 
     if (req.file) {
       const buffer = await sharp(req.file.buffer)
@@ -121,7 +122,7 @@ router.get("/", async (req, res) => {
     res.set("Content-Type", "multipart/form-data");
     res.send(bizCards);
   } catch (e) {
-    res.status(400).send("החיפוש לא הצליח. נסה שוב");
+    res.status(404).send("החיפוש לא הצליח. נסה שוב");
   }
 });
 
@@ -135,12 +136,12 @@ router.get("/:bizName", async (req, res) => {
 
     if (!bizCard) {
       return res
-        .status(400)
+        .status(404)
         .send("שם העסק לא קיים במערכת. נסה שם אחר או חפש לפי קטגוריה.");
     }
     res.send(bizCard);
   } catch (e) {
-    res.status(400).send(e);
+    res.status(404).send(e);
   }
 });
 
@@ -154,12 +155,12 @@ router.get("/category/:bizCategory", async (req, res) => {
 
     if (!bizCard) {
       return res
-        .status(400)
+        .status(404)
         .send("שם העסק לא קיים במערכת. נסה שם אחר או חפש לפי קטגוריה.");
     }
     res.send(bizCard);
   } catch (e) {
-    res.status(400).send(e);
+    res.status(404).send(e);
   }
 });
 
@@ -170,7 +171,7 @@ router.get("/myBiz/:owner", authMw, async (req, res) => {
     res.set("Content-Type", "multipart/form-data");
     res.send(bizCards);
   } catch (e) {
-    res.status(400).send(e);
+    res.status(500).send(e);
   }
 });
 
@@ -184,7 +185,69 @@ router.get("/:id/bizImage", async (req, res) => {
     res.set("Content-Type", "image/jpg");
     res.send(bizCard.bizImage);
   } catch (e) {
-    res.status(400).send();
+    res.status(404).send();
+  }
+});
+
+/////// show specific bizCard ///////
+router.get("/my-biz-card/:bizId", authMw, async (req, res) => {
+  try {
+    const bizCard = await BizCard.findOne({
+      _id: req.params.bizId,
+    });
+    if (!bizCard) {
+      return res.status(500).send("העסק שביקשת לא קיים בחשבונך");
+    }
+    res.send(bizCard);
+  } catch (e) {
+    res.status(404).send(e);
+  }
+});
+
+/////// delete biz card ///////
+router.delete("/delete/:bizId", authMw, async (req, res) => {
+  try {
+    console.log(req.params.bizId);
+    const bizCard = await BizCard.findOneAndRemove({
+      _id: req.params.bizId,
+    });
+    if (!bizCard) {
+      return res.status(404).send("העסק שביקשת לא קיים בחשבונך");
+    }
+    res.send(bizCard.bizName + " נמחק מחשבונך");
+  } catch (e) {
+    res.status(404).send("העסק שביקשת לא קיים בחשבונך");
+  }
+});
+
+/////// show specific bizCard ///////
+router.get("/my-biz-card/:bizId", authMw, async (req, res) => {
+  try {
+    const bizCard = await BizCard.findOne({
+      _id: req.params.bizId,
+    });
+    if (!bizCard) {
+      return res.status(400).send("העסק שביקשת לא קיים בחשבונך");
+    }
+    res.send(bizCard);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
+/////// delete biz card ///////
+router.delete("/delete/:bizId", authMw, async (req, res) => {
+  try {
+    console.log(req.params.bizId);
+    const bizCard = await BizCard.findOneAndRemove({
+      _id: req.params.bizId,
+    });
+    if (!bizCard) {
+      return res.status(400).send("העסק שביקשת לא קיים בחשבונך");
+    }
+    res.send(bizCard.bizName + " נמחק מחשבונך");
+  } catch (e) {
+    res.status(400).send("העסק שביקשת לא קיים בחשבונך");
   }
 });
 
