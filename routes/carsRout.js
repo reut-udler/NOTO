@@ -18,7 +18,7 @@ router.post("/", authMw, async (req, res) => {
     await car.save();
     res.status(200).send(car);
   } catch (e) {
-    res.status(400).send("רכב זה כבר רשום במערכת");
+    res.status(403).send("רכב זה כבר רשום במערכת");
   }
 });
 
@@ -28,7 +28,7 @@ router.get("/my-cars", authMw, async (req, res) => {
     const cars = await Car.find({ owner: req.user._id });
     res.send(cars);
   } catch (e) {
-    res.status(400).send(e);
+    res.status(500).send(e);
   }
 });
 

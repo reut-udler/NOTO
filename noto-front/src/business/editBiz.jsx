@@ -10,8 +10,6 @@ class EditBizCard extends Form {
       bizDescription: "",
       bizAdress: "",
       bizPhone: "",
-    },
-    file: {
       bizImage: "",
     },
     newBizImage: false,
