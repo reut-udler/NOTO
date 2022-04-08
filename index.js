@@ -11,7 +11,8 @@ const bizRouter = require("./routes/bizRout");
 
 mongoose
   .connect(
-    "mongodb://reutudler:reutudler@notodb-shard-00-00.s9aba.mongodb.net:27017,notodb-shard-00-01.s9aba.mongodb.net:27017,notodb-shard-00-02.s9aba.mongodb.net:27017/notodb?ssl=true&replicaSet=atlas-b5w6o7-shard-0&authSource=admin&retryWrites=true&w=majority"
+    process.env.MONGODB_URI ||
+      "mongodb+srv://reutudler:eJ53Guyvm7ySeMra@notodb.s9aba.mongodb.net/notodb?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("connected to mongo");

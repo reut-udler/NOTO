@@ -69,18 +69,6 @@ class EditCar extends Form {
     this.props.history.push("/my-cars");
   };
 
-  handleEdit = (e) => {
-    e.preventDefault();
-    const { form } = this.state;
-    const { error } = Joi.object({ ...this.schema }).validate(form, {
-      abortEarly: false,
-    });
-    if (!error) {
-      this.doSubmit();
-    }
-    return error;
-  };
-
   render() {
     return (
       <div className="container d-flex justify-content-center">

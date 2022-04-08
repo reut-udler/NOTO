@@ -32,6 +32,7 @@ class Form extends Component {
     return errors;
   };
 
+  //submit from create pages
   handleSubmit = (e) => {
     e.preventDefault();
     const errors = this.validate();
@@ -58,6 +59,31 @@ class Form extends Component {
     });
   };
 
+  handleEdit = (e) => {
+    e.preventDefault();
+    const errors = this.validate();
+    this.setState({ errors });
+    if (errors) {
+      console.log(errors);
+      return errors;
+    }
+    this.doSubmit();
+  };
+
+  handleEditBiz = (e) => {
+    e.preventDefault();
+    const { form } = this.state;
+    const { error } = Joi.object({ ...this.schema }).validate(form, {
+      abortEarly: false,
+    });
+    if (!error) {
+      this.doSubmit();
+    } else {
+      return error;
+    }
+  };
+
+  //render all text input
   renderInput(name, label, type = "text") {
     const { form, errors } = this.state;
     return (
@@ -72,12 +98,15 @@ class Form extends Component {
     );
   }
 
+  //handle bizImage
   handleUpload = ({ target }) => {
     this.setState({
       file: target.files[0],
+      newBizImage: true,
     });
   };
 
+  //rendering bizImage
   renderUpload(name, label, type) {
     return (
       <Input
@@ -89,6 +118,7 @@ class Form extends Component {
     );
   }
 
+  //save button
   renderButton(label) {
     return <button className="btn btn-primary">{label}</button>;
   }

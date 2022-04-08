@@ -79,6 +79,10 @@ class CreateBiz extends Form {
     }
   }
 
+  handleCancel = () => {
+    this.props.history.push("/business");
+  };
+
   render() {
     return (
       <div className="container mt-5">
@@ -106,6 +110,13 @@ class CreateBiz extends Form {
 
               <div className="mt-5 mx-auto text-center">
                 {this.renderButton("שמור")}
+
+                <button
+                  onClick={this.handleCancel}
+                  className="btn btn-dark my-auto me-5 "
+                >
+                  בטל
+                </button>
               </div>
             </div>
           }

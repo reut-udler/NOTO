@@ -22,6 +22,8 @@ import BizPage from "./business/bizPage";
 import CreateBiz from "./business/createbusiness";
 import FavoritesPage from "./business/favoritesPage";
 import MyBizCards from "./business/myBizCards";
+import EditBizCard from "./business/editBiz";
+import DeleteBiz from "./business/deleteBiz";
 
 class App extends Component {
   state = { user: null };
@@ -60,6 +62,8 @@ class App extends Component {
             />
             <ProtectedRoute path="/favorites" component={FavoritesPage} />
             <ProtectedRoute path="/my-biz-cards" component={MyBizCards} />
+            <ProtectedRoute path="/edit/:id" component={EditBizCard} />
+            <ProtectedRoute path="/delete/:id" component={DeleteBiz} />
 
             <Route path="/about" component={About} />
             <Route path="/signup" component={SignUp} />

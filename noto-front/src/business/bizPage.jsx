@@ -37,7 +37,7 @@ class BizPage extends Component {
         if (!!this.props.user) {
           const ownerId = this.props.user._id;
           for (let i = 0; i < data.length; i++) {
-            if (data[i].owner == ownerId) {
+            if (data[i].owner === ownerId) {
               this.setState({
                 bizOwner: true,
               });
@@ -47,8 +47,7 @@ class BizPage extends Component {
         }
       };
       isBizOwner();
-    }
-    {
+    } else {
       this.setState({
         loader: false,
       });
@@ -163,8 +162,9 @@ class BizPage extends Component {
                   className="biz-card"
                   key={bizCard._id}
                   bizCard={bizCard}
-                  onFavorites={this.favoritesHandler}
                   favorites={this.state.favorites}
+                  onFavorites={this.favoritesHandler}
+                  user={!!this.props.user}
                 />
               ))}
             </div>
