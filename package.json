@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
+    "start": "node index.js",
     "dev": "nodemon .",
     "build": "cd noto-front && npm run build",
     "install-front": "cd noto-front && npm install",
@@ -20,6 +20,7 @@
     "bcrypt": "^5.0.1",
     "config": "^3.3.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.1",
     "firebase-admin": "^10.0.1",
     "joi": "^17.4.2",
