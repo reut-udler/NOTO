@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
-    "dev": "nodemon .",
+    "start": "cross-env NODE_ENV=production node index",
+    "dev": "cross-env NODE_ENV=development nodemon .",
     "build": "cd noto-front && npm run build",
     "install-front": "cd noto-front && npm install",
     "heroku-postbuild": "npm run install-front && npm run build"
@@ -32,6 +32,7 @@
     "sharp": "^0.29.3"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.12"
   }
 }

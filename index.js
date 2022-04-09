@@ -11,11 +11,10 @@ const bizRouter = require("./routes/bizRout");
 
 mongoose
   .connect(
-    process.env.MONGODB_URI ||
-      "mongodb+srv://reutudler:eJ53Guyvm7ySeMra@notodb.s9aba.mongodb.net/notodb?retryWrites=true&w=majority"
+    "mongodb+srv://reutudler:eJ53Guyvm7ySeMra@notodb.s9aba.mongodb.net/notodb?retryWrites=true&w=majority"
   )
   .then(() => {
-    console.log("connected to mongo");
+    console.log("connected to mongodb atlas");
   })
   .catch((err) => {
     console.log("faild to connect to mongo server", err);
@@ -38,3 +37,5 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`connected on port ${PORT}`);
 });
+
+console.log(process.env.NODE_ENV);
