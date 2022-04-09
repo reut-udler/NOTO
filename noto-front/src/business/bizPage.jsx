@@ -65,7 +65,6 @@ class BizPage extends Component {
   };
 
   findBizCategoryHandle = async () => {
-    console.log(this.props);
     const bizCategory = this.userInputCategory.current.value;
     try {
       const { data } = await bizService.findBizCategory(bizCategory);

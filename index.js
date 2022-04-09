@@ -14,7 +14,7 @@ mongoose
     "mongodb+srv://reutudler:eJ53Guyvm7ySeMra@notodb.s9aba.mongodb.net/notodb"
   )
   .then(() => {
-    console.log("connected to mongodb atlas");
+    console.log("connected to mongodb");
   })
   .catch((err) => {
     console.log("faild to connect to mongo server", err);
@@ -33,9 +33,11 @@ app.use("/api/auth", authRouter);
 app.use("/api/cars", carsRouter);
 app.use("/api/biz", bizRouter);
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/noto-front/build", "index.html"));
+});
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`connected on port ${PORT}`);
 });
-
-console.log(process.env.NODE_ENV);
